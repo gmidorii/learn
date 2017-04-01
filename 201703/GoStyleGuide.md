@@ -11,3 +11,19 @@
 - gapは例を用いることで埋める
   - [Go Example]{https://blog.golang.org/examples}
 - mainパッケージからエクスポートしない
+
+## Package Naming
+- lowercase only
+- 短く、ユニークで代表的な名前
+  - パッケージ名から目的を把握できるくらいに
+- util等の広範なパッケージ名は避ける
+- 悪い名前しかつけられない場合は、全体構成が誤りな可能性が高い
+- import pathをきれいに保つ
+  - src,pkg等は使わない
+- 複数形にはしない
+- goのスタンダードパッケージをrenameする場合は、goプレフィックスをつける
+
+## Package Documentation
+- packageの前にpackageの説明を記載する
+  - `“Package {pkgname}”`
+-  `doc.go` にpackage情報を記載する手法もある
