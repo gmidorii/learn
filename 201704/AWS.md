@@ -87,3 +87,24 @@
     - P2, G2, F1
   - ストレージ最適化
     - I3, D2
+
+## Amazon Linux
+### 特徴
+- AWS APIツールとCloudInitがインストール
+- SSH キーペアの使用およびリモートルートログインの無効化
+- Message of the Dayでアップデート通知
+
+### CentOsとの違い
+- RedHat系のディストリビューション
+- バージョニングはYYYY.MM
+- 常に最新版にアップデートされる
+  - yumの設定ファイルを修正することで固定可能
+- /opt/aws 以下にツールを一通りインストールされている
+- aws cliもyumでupdateできる
+- cloud-initが初期インストール
+  - UserDataに設定したOSの設定情報を自動で起動時に反映してくれるツール
+  - (CentOS7もcloud-init初期インストール) 
+- SELinux無効
+- デフォルトユーザー
+  - AmazonLinux: ec2-user
+  - CentOS7: centos
