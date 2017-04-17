@@ -24,4 +24,3 @@ L7, ALB：動的ポートマッピング、ルーティング方法(PATH,ホス�
 ・Route53
 AWS DNSサービスでSLA 100%(PFは未保証)
 waited(振り分け) , fail over
-# TTL , 浸透に時間がかかる

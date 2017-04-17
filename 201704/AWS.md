@@ -87,6 +87,8 @@
     - P2, G2, F1
   - ストレージ最適化
     - I3, D2
+  - key pair
+    - 基本的にキーペアでのみ(SSH)ログイン可能
 
 ## Amazon Linux
 ### 特徴
@@ -108,3 +110,28 @@
 - デフォルトユーザー
   - AmazonLinux: ec2-user
   - CentOS7: centos
+
+### EBS
+- ブロックレベルのストレージボリューム
+- データにすばやくアクセスする必要があり、長期永続性が必要な場合に推奨
+- スナップショット
+  - 増分バックアップ
+  - 最初は時間がかかる
+  - 暗号化可能
+  - 最新のスナップショットさえあればボリュームを復元
+
+### UserData
+- EC2起動時に実行するコマンド群を定義できる
+- 定義方法
+  - シェルスクリプト
+  - cloud-init
+- シェルスクリプト実行
+  - rootユーザーで実行される
+  - `sudo` は不要
+  - ユーザーフィードバックが必要なコマンドは実行できない
+  - `/var/log/cloud-init-output.log` にログが出力される
+  - `#!/bin/bash` で始める必要あり
+- cloud-init
+  - .ssh/authorized_keysec2-user ファイルを設定
+  - [cloud-init Documentation][http://cloudinit.readthedocs.io/en/latest/index.html]
+  - `#cloud-config` と先頭に記載
