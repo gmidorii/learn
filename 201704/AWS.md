@@ -111,7 +111,7 @@
   - AmazonLinux: ec2-user
   - CentOS7: centos
 
-### EBS
+## EBS
 - ブロックレベルのストレージボリューム
 - データにすばやくアクセスする必要があり、長期永続性が必要な場合に推奨
 - スナップショット
@@ -120,7 +120,7 @@
   - 暗号化可能
   - 最新のスナップショットさえあればボリュームを復元
 
-### UserData
+## UserData
 - EC2起動時に実行するコマンド群を定義できる
 - 定義方法
   - シェルスクリプト
@@ -136,7 +136,7 @@
   - [cloud-init Documentation][http://cloudinit.readthedocs.io/en/latest/index.html]
   - `#cloud-config` と先頭に記載
 
-### ロードバランサ
+## ロードバランサ
 - Elastic Load Balancing
   - Classic Load Balancer
   - Application Load Balancer
