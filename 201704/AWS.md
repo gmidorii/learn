@@ -135,3 +135,66 @@
   - .ssh/authorized_keysec2-user ファイルを設定
   - [cloud-init Documentation][http://cloudinit.readthedocs.io/en/latest/index.html]
   - `#cloud-config` と先頭に記載
+
+### ロードバランサ
+- Elastic Load Balancing
+  - Classic Load Balancer
+  - Application Load Balancer
+- 複数のインスタンスと複数のアベイラビリティーゾーン内で自動的にトラフィックをルーティングする
+- 異常なインスタンスを検出する
+- availability zoneの片方がとまったら、もう片方のazに割り振る
+- 要求処理容量を自動的に縮小/拡大
+- 内部ロードバランサーと外部ロードバランサーを利用する
+- AWS Certificate Manager と統合することでSSL/TLS を有効化できる
+- Route53と併用することでDNS fail overすることが可能
+  - 代替ロードバランサーを設定する
+  - sorry pageに振り分けたりできる
+- Auto Scalingを利用してEC2の最小台数を設定可能
+- ヘルスチェックを設定可能
+- CLBはクロスゾーン負荷分散がデフォルトで無効
+- ALBはインスタンスをターゲットとしてターゲットグループにルーティングを行う
+- クロスゾーン負荷分散
+  - 有効: 各インスタンスに均等にリクエストを振り分ける(azは関係なし)
+  - 無効: azごとに均等にリクエストを振り分ける
+- ラウンドロビンのルーティングアルゴリズム
+- アイドルタイムアウト値設定可能
+  - default: 60秒
+- 時間 + 転送量で課金される
+- Layer4
+  - ネットワークプロトコルのレベルで動作
+  - パケットの中身は見ない
+  - HTTPやHTTPSの機能は無視
+- Layer7
+  - パケットを見る
+  - HTTPやHTTPSのヘッダーを参照できる
+- ALB
+  - URLベースのルールを10個まで定義できる
+  - コンテナベースのアプリケーションを認識しサポート
+  - ポートレベルでヘルスチェックを実施可能
+  - 削除保護可能
+  - 異なるアプリケーション(ターゲットグループ)にバランシング可能
+  - ひとつのドメインで複数サービスが利用可能となった
+- 作業流れ
+1. ターゲットグループを作成する
+2. ターゲットグループにインスタンスを登録する
+3. ALBを作成する
+4. ルールを作成してターゲットグループへのルーティングを設定する
+- 動的ポートマッピング
+  - ひとつのEC2上の複数ポートに対してバランシング可能
+  - ECSでは自動でターゲットグループにインスタンスIDとポートを登録可能
+- Connection Draining
+  - 一定時間サービスのリクエストは受け付けず、ただ残った処理は続行される
+  - 表示はInService
+- ELB自体もスケールする
+  - ただIPアドレスが変わるためDNS名で必ずアクセスする
+  - 間に合わなければHTTP 503を返す
+  - pre-warning等で回避
+- リクエスト振り分け
+  - DNSラウンドロビンでAZごとに振り分け
+  - ELBが均等になるようEC2に振り分け
+- ELB上でSSL処理が可能 →　後ろの人達は気にしなくて良い
+  - ELBにサーバー証明書をアップロードする
+- stickey session
+  - 同一ユーザーリクエストを同一EC2に分散
+  - ELBで有効期限を設定可能
+- [ELBのすごくわかりやすい資料][https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2016-elastic-load-balancing]
