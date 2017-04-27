@@ -1,5 +1,9 @@
 # AWS
 
+## 情報源
+- [公式ドキュメント][https://aws.amazon.com/jp/documentation/]
+- [JAWS-UG CLI ハンズオン一覧][http://qiita.com/tcsh/items/b55eee599ae2c8806e4f]
+
 ## IAM (Identity and Access Management)
 - 使用料無料
 - IAMユーザー : 認証
