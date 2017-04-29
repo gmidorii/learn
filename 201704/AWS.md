@@ -228,3 +228,25 @@
   - OK – メトリックスの値が、しきい値を下回っている
   - ALARM – メトリックスの値が、しきい値を上回っている
   - INSUFFICIENT_DATA – アラームが開始直後であるか、メトリックスが利用できないか、データが不足していてアラームの状態を判定できない
+
+## Amazon SNS(Simple Notification Service)
+- Client
+  - Publisher
+    - topicにメッセージを送信する
+    - Subscriberと `Asynchronous` に通信する
+  - Subscriber
+    - 例
+      - サーバー
+      - Mail
+      - SQS
+      - Lambda
+- 手順
+1. Topicの作成
+2. Topicのポリシー設定(通信可能なPublisherとSubscriberを決定)
+- senderとreceiverの仲立ちをする立ち位置
+- receiverがsenderに依存しているモデル
+- [Push通知だけじゃない][http://dev.classmethod.jp/cloud/aws/non-mobile-sns/]
+- pub-sub messaging
+  - publiserとsubscriberは1対多の関係
+  - Asynchronous通信
+  - publisherがsubscriberに依存していない(= senderがrecieverに依存していない)
