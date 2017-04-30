@@ -254,3 +254,14 @@
   - 各ポリシーは、1 つのトピックだけを対象とする必要あり
   - 固有のポリシ-IDが必要
   - ポリシーを構成するステートメントには固定IDが必要
+- SNSポリシーアクション
+  - sns:AddPermission
+    - topicポリシーへのアクセス許可の追加を許可
+  - sns:ListSubscriptionsByTopic
+    - 特定のトピックへのサブスクリプションを全て取得することを許可
+  - sns:Publish
+  - sns:Subscribe
+    - そのままの意味
+- SNSキー
+  - sns:Endpoint
+  - sns:Protocol
