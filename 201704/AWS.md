@@ -250,3 +250,7 @@
   - publiserとsubscriberは1対多の関係
   - Asynchronous通信
   - publisherがsubscriberに依存していない(= senderがrecieverに依存していない)
+- ポリシー
+  - 各ポリシーは、1 つのトピックだけを対象とする必要あり
+  - 固有のポリシ-IDが必要
+  - ポリシーを構成するステートメントには固定IDが必要
