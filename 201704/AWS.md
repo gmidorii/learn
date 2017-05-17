@@ -220,3 +220,63 @@
   - 命名規則 AWS/<service>
 - ディメンション
   - メトリクスの一意の識別子
+- データ保存日数
+  - 1分ごとのデータポイントを 15 日間保存
+  - 5 分ごとのデータポイントを 63 日間保存
+  - 1 時間ごとのデータポイントを 455 日間保存
+- アラーム
+  - OK – メトリックスの値が、しきい値を下回っている
+  - ALARM – メトリックスの値が、しきい値を上回っている
+  - INSUFFICIENT_DATA – アラームが開始直後であるか、メトリックスが利用できないか、データが不足していてアラームの状態を判定できない
+
+## Amazon SNS(Simple Notification Service)
+- Client
+  - Publisher
+    - topicにメッセージを送信する
+    - Subscriberと `Asynchronous` に通信する
+  - Subscriber
+    - 例
+      - サーバー
+      - Mail
+      - SQS
+      - Lambda
+- 手順
+1. Topicの作成
+2. Topicのポリシー設定(通信可能なPublisherとSubscriberを決定)
+- senderとreceiverの仲立ちをする立ち位置
+- receiverがsenderに依存しているモデル
+- [Push通知だけじゃない][http://dev.classmethod.jp/cloud/aws/non-mobile-sns/]
+- pub-sub messaging
+  - publiserとsubscriberは1対多の関係
+  - Asynchronous通信
+  - publisherがsubscriberに依存していない(= senderがrecieverに依存していない)
+- ポリシー
+  - 各ポリシーは、1 つのトピックだけを対象とする必要あり
+  - 固有のポリシ-IDが必要
+  - ポリシーを構成するステートメントには固定IDが必要
+- SNSポリシーアクション
+  - sns:AddPermission
+    - topicポリシーへのアクセス許可の追加を許可
+  - sns:ListSubscriptionsByTopic
+    - 特定のトピックへのサブスクリプションを全て取得することを許可
+  - sns:Publish
+  - sns:Subscribe
+    - そのままの意味
+- SNSキー
+  - sns:Endpoint
+  - sns:Protocol
+
+## Route53
+- DNSウェブサービス
+  - ドメイン (`www.example.com`) をIPアドレスに変換
+  - IPv6完全準拠
+- 機能
+  - domain name登録
+  - トラフィックを指定リソースにルーティング
+  - helth check
+- DNS フェイルオーバー
+  - アクティブ/アクティブフェイルオーバー
+    - 全台を利用して、一部異常を検知すると振り分けを制限する
+  - アクティブ/パッシブフェイルオーバー
+    - プライマリーグループとセカンダリーグループに分ける
+    - すべてのプライマリーグループで異常が発生した場合、セカンダリーリソースを利用
