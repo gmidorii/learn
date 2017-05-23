@@ -27,6 +27,9 @@
     - `hasItem()` Iterableインタフェースを実装したクラスに、期待値が含まれているか検証
     - `hasItems()` 複数指定可能
   - BaseMatcher<> を継承することで、カスタムMatcherが作成できる
+- @RunWith(Enclosed.class)
+  - テストケースごとにclassを分割してテストを行う
+  - 共通の初期化処理を複数パターン行いたい場合に利用する
 
 ```java
 public class TargetClassTest {
@@ -67,3 +70,36 @@ public class TargetClassTest {
 }
 ```
 
+### Fixture
+- 事前準備にて、設定する情報のこと
+- inline set up
+  - 各テストメソッドごとに、fixtureのset upを行う
+  - simpleに設定を記述すれば良い
+  - コードが長くなり、可読性が悪くなりがち
+- implicit set up
+  - @Beforeアノテーションをつけたメソッドにて設定を行う手法
+
+### パラメータ化テスト
+- Theories
+  - `@RunWith(Theories.class)` を利用
+  - `@Theory` テストメソッドのアノテーション
+  - `@DataPoint` パラメータ
+```java
+@RunWith(Theories.class)
+public class TargetClassTest {
+  @DataPoint
+  public static int PARAM_1 = 1;
+
+  @DataPoint
+  public static int PARAM_2 = 2;
+
+  public TargetClassTest() {
+    // 初期化処理
+  }
+
+  @Theory
+  public void testCase(int x) throws Exception {
+
+  }
+}
+```
