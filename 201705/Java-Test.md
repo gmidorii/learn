@@ -121,16 +121,22 @@ public Timeout timeout = new Timeout(100);
   - これを利用することでテストに共通の前後処理を定義することができる
 ```java
 public class HogeRule implements TestRule {
+
+  private void before() {}
+  private void after() {}
+
   @Override
   public Statement apply(final Statement base, Description description) {
     // new Statement()することで実際のテストを拡張している
     return new Statement() {
       // 前処理
+      before()
       
       // テスト実行 (@Before -> テスト実行 -> @After)
       base.evaluate();
 
       // 後処理
+      after()
     }
   }
 }
@@ -152,6 +158,36 @@ public class HogeRule implements TestRule {
   - JDBCサポート
 - DBUnit
   - @Ruleとして、作成することでDB接続周りを一手に引き受けられる
+  - `org.dbunit.AbstractDatabaseTester` を継承する
+
+### コードカバレッジ
+#### カバレッジの種類
+- C0(命令網羅)
+  - プログラム中に定義された命令が１回以上実行されたかを測定 
+  - line coverageと同等
+  - 基準
+    - ソースレベルのステートメント
+    - バイトコード上のイントラクション
+- C1(分岐網羅)
+  - すべての分岐(if)を１回以上実行したかを測定
+  - `if`条件の `true` or `false` のどちらも通す必要がある
+- C2(条件網羅)
+  - すべての条件を１回以上実行したかを測定
+  - `if`条件の`true`になる全ての条件と`false`になるすべての条件を見る必要がある
+- カバレッジ測定ツール
+  - [EclEMMA(http://www.eclemma.org/)
+    - Eclipseのプラグイン
+    - カバレッジ測定エンジン`Jacoco`を利用
+  - [Jacoco](http://www.eclemma.org/jacoco/)
+    - カバレッジ測定エンジン
+    - Mavenにライブラリとして追加 [Maven Repository](http://www.eclemma.org/jacoco/trunk/doc/maven.html)
+```sh
+# テスト実行 + カバレッジ測定
+% mvn clean jacoco:prepare-agent test jacoco:report
+
+# カバレッジレポート参照
+% target/site/jacoco/index.html
+```
 
 ## 参考文献
 [JUnit実践入門 ~体系的に学ぶユニットテストの技法 (WEB+DB PRESS plus)](https://www.amazon.co.jp/JUnit%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80-%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6%E3%83%A6%E3%83%8B%E3%83%83%E3%83%88%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E6%8A%80%E6%B3%95-WEB-PRESS-plus/dp/477415377X/ref=sr_1_1?ie=UTF8&qid=1495546152&sr=8-1&keywords=junit+%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80)
