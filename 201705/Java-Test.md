@@ -104,6 +104,40 @@ public class TargetClassTest {
 }
 ```
 
+### Rule
+- テストをプラグイン的に拡張できる機能
+- publicなfiledにアノテーションをつけて利用する
+```java
+@Rule
+public Timeout timeout = new Timeout(100);
+```
+- 処理はテストごとに実行される → テストごとに実行したい共通処理をRuleとしてまとめられる
+- `@ClassRule` にてテストClassごとに１回のRuleも作成可能
+- カスタムルールの作成
+  - `org.junit.rules.TestRule` インターフェイスを継承する
+  - `Statement apply(final Statement base, Description description)` をOverrideする
+    - 引数で渡される `Statement base` が各テストメソッドのイメージ
+    - `base.evaluate()` を実行することでテストが実行される
+  - これを利用することでテストに共通の前後処理を定義することができる
+```java
+public class HogeRule implements TestRule {
+  @Override
+  public Statement apply(final Statement base, Description description) {
+    // new Statement()することで実際のテストを拡張している
+    return new Statement() {
+      // 前処理
+      
+      // テスト実行 (@Before -> テスト実行 -> @After)
+      base.evaluate();
+
+      // 後処理
+    }
+  }
+}
+
+```
+
+
 ### モック
 - `org.mockito.Mockito` ライブラリを利用する
   - モックの作成 `mock(TargetClass.class)`
@@ -116,6 +150,8 @@ public class TargetClassTest {
   - 組み込みモード、サーバーモード、ミックスモードで動作
   - jarファイル１つ(1.5MB)動作
   - JDBCサポート
+- DBUnit
+  - @Ruleとして、作成することでDB接続周りを一手に引き受けられる
 
 ## 参考文献
 [JUnit実践入門 ~体系的に学ぶユニットテストの技法 (WEB+DB PRESS plus)](https://www.amazon.co.jp/JUnit%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80-%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6%E3%83%A6%E3%83%8B%E3%83%83%E3%83%88%E3%83%86%E3%82%B9%E3%83%88%E3%81%AE%E6%8A%80%E6%B3%95-WEB-PRESS-plus/dp/477415377X/ref=sr_1_1?ie=UTF8&qid=1495546152&sr=8-1&keywords=junit+%E5%AE%9F%E8%B7%B5%E5%85%A5%E9%96%80)
