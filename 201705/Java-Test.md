@@ -140,9 +140,49 @@ public class HogeRule implements TestRule {
     }
   }
 }
-
 ```
+- カスタムルールの作成ver2 (← こちらのほうが効率よく作れる)
+  - ExternalResourceを継承して作成
+```java
+// 上記のサンプルコードをすでに実装した抽象クラス
+public abstract class ExternalResource implements TestRule {
+    public Statement apply(Statement base, Description description) {
+        return statement(base);
+    }
 
+    private Statement statement(final Statement base) {
+        return new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                before();
+                try {
+                    base.evaluate();
+                } finally {
+                    after();
+                }
+            }
+        };
+    }
+
+    /**
+     * Override to set up your specific external resource.
+     *
+     * @throws if setup fails (which will disable {@code after}
+     */
+    protected void before() throws Throwable {
+        // do nothing
+    }
+
+    /**
+     * Override to tear down your specific external resource.
+     */
+    protected void after() {
+        // do nothing
+    }
+}
+```
+  - 利用する際は、`before()`と`after()`をOverrideして、前後処理を記載する
+  - Rule内で利用する変数はprivate fieldに宣言しておき、コンストラクタで受け取る
 
 ### モック
 - `org.mockito.Mockito` ライブラリを利用する
