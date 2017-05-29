@@ -20,6 +20,11 @@ type Interface interface {
     Swap(i, j int)
 }
 ```
+| メソッド                | 特徴              |
+|---------------------|-----------------|
+| Len() int           | 配列・リストの要素数      |
+| Less(i, j int) bool | i < j を満たすかの真偽値 |
+| Swap(i,j int)       | iとjの要素を入れ替える    |
 
 - sort.Search(n int, f func(int) booli int
   - f()がtrue になる最初のindexを返却する
