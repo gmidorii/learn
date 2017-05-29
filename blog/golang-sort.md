@@ -6,7 +6,7 @@ GolangのSort処理について、まとめました。
 ## Sort
 ### Sort Interface
 Golangでは、`struct`のソートを行うため、`sort.Interface`を実装する必要があります。  
-(実際はGo1.8以降、下記の`sort.Slice()`を利用して、ソートすることができるようになりました。)  
+(実際はGo1.8以降、下記の `sort.Slice()` を利用して、ソートすることができるようになりました。)  
   
 ```golang
 // sort.Interface
@@ -44,7 +44,7 @@ fmt.Println(nums)
 // output: [2 3 4 8 10]
 ```
 
-### sort.Reverse(data Interface) Inteface
+#### sort.Reverse(data Interface) Inteface
 `Reverse(data Interface)` は、sort.Interface型のソート方法を逆順にする修正する関数です。  
 実際に内部で行っていることは、下記の２点です。  
 1. reverse structにstructを詰め替える  
