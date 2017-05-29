@@ -26,6 +26,53 @@ type Interface interface {
 | Less(i, j int) bool | i < j を満たすかの真偽値 |
 | Swap(i,j int)       | iとjの要素を入れ替える    |
 
+### Sortの方法
+標準パッケージで対応している型は下記になります。
+- float64
+- int
+- string
+
+また、ソートの方法をintをもとにみていきます。
+#### sort.Ints(a int[])
+`Ints()` メソッドは、int[]型をソートするメソッドです。  
+これは、昇順(increacing)にソートされます。  
+```golang
+nums := []int{4, 3, 2, 10, 8}
+sort.Ints(nums)
+fmt.Println(nums)
+
+// output: [2 3 4 8 10]
+```
+
+### sort.Reverse(data Interface) Inteface
+`Reverse(data Interface)` は、sort.Interface型のソート方法を逆順にする修正する関数です。  
+実際に内部で行っていることは、下記の２点です。  
+1. reverse structにstructを詰め替える  
+`reverse struct` は、 `sort.Interface` を埋め込んでいます。  
+```golang
+type reverse struct {
+	// This embedded Interface permits Reverse to use the methods of
+	// another Interface implementation.
+	Interface
+}
+
+// Reverse returns the reverse order for data.
+func Reverse(data Interface) Interface {
+	return &reverse{data}
+}
+```
+
+2. Lessメソッドの引数をスワップ  
+`reverse struct` は、実装を参照したところ、
+`Less(i,j int) bool` のみを再実装しています。  
+これにより、比較条件を逆にすることで、逆順ソートを実現しています。
+```golang
+// Less returns the opposite of the embedded implementation's Less method.
+func (r reverse) Less(i, j int) bool {
+	return r.Interface.Less(j, i)
+}
+```
+
 - sort.Search(n int, f func(int) booli int
   - f()がtrue になる最初のindexを返却する
   - 一致を探すことも、ある数値以上の値を探すことも可能
