@@ -33,6 +33,7 @@ type Interface interface {
 - string
 
 また、ソートの方法をintをもとにみていきます。
+
 #### sort.Ints(a int[])
 `Ints()` メソッドは、int[]型をソートするメソッドです。  
 これは、昇順(increacing)にソートされます。  
@@ -44,12 +45,34 @@ fmt.Println(nums)
 // output: [2 3 4 8 10]
 ```
 
+内部では、 `IntSlice` 型のstructにつめかえを行い、Sort関数を呼んでいます。  
+(`sort.Interface`を実装するルールは同じ)
+```golang
+// package sort
+
+// Ints sorts a slice of ints in increasing order.
+func Ints(a []int) { Sort(IntSlice(a)) }
+
+
+// IntSlice
+// Len,Less,Swapを実装したstruct
+
+// IntSlice attaches the methods of Interface to []int, sorting in increasing order.
+type IntSlice []int
+
+func (p IntSlice) Len() int           { return len(p) }
+func (p IntSlice) Less(i, j int) bool { return p[i] < p[j] }
+func (p IntSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+```
+
 #### sort.Reverse(data Interface) Inteface
 `Reverse(data Interface)` は、sort.Interface型のソート方法を逆順にする修正する関数です。  
 実際に内部で行っていることは、下記の２点です。  
 1. reverse structにstructを詰め替える  
 `reverse struct` は、 `sort.Interface` を埋め込んでいます。  
 ```golang
+// package sort
+
 type reverse struct {
 	// This embedded Interface permits Reverse to use the methods of
 	// another Interface implementation.
