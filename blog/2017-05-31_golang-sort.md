@@ -2,6 +2,7 @@
 
 ## GolangのSort処理
 GolangのSort処理について、まとめました。  
+(`// package sort` と記載があるサンプルコードは、Golang本体のソースコードです)
 
 ## Sort
 ### Sort Interface
@@ -96,10 +97,67 @@ func (r reverse) Less(i, j int) bool {
 }
 ```
 
-- sort.Search(n int, f func(int) booli int
-  - f()がtrue になる最初のindexを返却する
-  - 一致を探すことも、ある数値以上の値を探すことも可能
-  - 配列は、ソートしておく必要がある
+#### sort.Search(n int, f func(int) bool) int
+nの長さの配列内で`f()=true` となる最小のindexを返却します。  
+→ 配列内で指定のvalueがあるかどうかを調べる関数です。  
+
+特徴
+- 条件を満たさなかった場合、nが返却
+- 一致を探すことも、ある数値以上の値を探すことも可能
+- binary search(二分探索)で検索
+  - ソートされた配列に対して実行しないと正確な結果が返却されない
+- 下記は`Search`のラッパー関数
+  - func SearchFloat64s(a []float64, x float64) int
+  - func SearchInts(a []int, x int) int
+  - func SearchStrings(a []string, x string) int
+
+```golang
+// package sort
+
+// binary sort の実装
+func Search(n int, f func(int) bool) int {
+	// Define f(-1) == false and f(n) == true.
+	// Invariant: f(i-1) == false, f(j) == true.
+	i, j := 0, n
+	for i < j {
+		h := i + (j-i)/2 // avoid overflow when computing h
+		// i ≤ h < j
+		if !f(h) {
+			i = h + 1 // preserves f(i-1) == false
+		} else {
+			j = h // preserves f(j) == true
+		}
+	}
+	// i == j, f(i-1) == false, and f(j) (= f(i)) == true  =>  answer is i.
+	return i
+}
+
+// Int ラッパー関数
+func SearchInts(a []int, x int) int {
+	return Search(len(a), func(i int) bool { return a[i] >= x })
+}
+```
+
+利用サンプル
+```golang
+
+nums := []int{4, 3, 2, 10, 8}
+x := 8
+
+// 事前にソートしておく
+sort.Ints(nums)
+// search asc
+index = sort.Search(len(nums), func(i int) bool {
+  return nums[i] >= x
+})
+
+if index < len(nums) && nums[index] == x {
+	// nums[index] = 8 = x
+} else {
+	// x は nums[]中に存在しなかった
+  // だが、indexはnums[]の中にxをインサートする位置にある
+}
+```
 
 - sort.Slice(slice interface{}, less func(i, j int) bool)
   - less関数で定義された順にソートされる(go1.8.1以上)
