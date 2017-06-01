@@ -159,11 +159,15 @@ if index < len(nums) && nums[index] == x {
 }
 ```
 
-- sort.Slice(slice interface{}, less func(i, j int) bool)
-  - less関数で定義された順にソートされる(go1.8.1以上)
-  - sort.Interfaceを実装していなくてもソートが可能となっている
-  - stable sortを保証していない
-    - sort.SliceStableを利用することで保証される
+#### sort.Slice(slice interface{}, less func(i, j int) bool)
+渡したsliceを、ソートする関数。  
+less関数で定義された順にソートされる。  
+
+特徴
+- go1.8.1以上(要確認)
+- sort.Interfaceを実装していなくてもソートが可能となっている
+- stable sortを保証していない
+  - sort.SliceStableを利用することで保証される
 
 - sort.Sort(data sort.Interface) は渡されるデータによってソートの種別変える
   - ヒープソート
