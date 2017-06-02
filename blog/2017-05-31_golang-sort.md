@@ -7,7 +7,7 @@ GolangのSort処理について、まとめました。
 ## Sort
 ### Sort Interface
 Golangでは、`struct`のソートを行うため、`sort.Interface`を実装する必要があります。  
-(実際はGo1.8以降、下記の `sort.Slice()` を利用して、ソートすることができるようになりました。)  
+(実際はGo1.8以降、下記の `sort.Slice()` を利用して、ソートすることができるようになりました。[参考](https://tylerchr.blog/golang-18-whats-coming/))
   
 ```golang
 // sort.Interface
@@ -33,7 +33,7 @@ type Interface interface {
 - int
 - string
 
-また、ソートの方法をintをもとにみていきます。
+ここでは、ソートの方法をint配列をもとにみていきます。
 
 #### sort.Ints(a int[])
 `Ints()` メソッドは、int[]型をソートするメソッドです。  
@@ -164,23 +164,37 @@ if index < len(nums) && nums[index] == x {
 less関数で定義された順にソートされる。  
 
 特徴
-- go1.8.1以上(要確認)
+- Go1.8以上
 - sort.Interfaceを実装していなくてもソートが可能となっている
-- stable sortを保証していない
+- stable sort(安定ソート)を保証していない
   - sort.SliceStableを利用することで保証される
 
-- sort.Sort(data sort.Interface) は渡されるデータによってソートの種別変える
-  - ヒープソート
-    - 条件: log(n+1)の整数値の2乗よりも深い場合
-      - 右に1ビットずつシフト演算して0になるまでの回数の2乗が最大の深さ
-      - この値が0となったときに、ヒープソートに切り替わる
-    ```go
-    // Switch to heapsort if depth of 2*ceil(lg(n+1)) is reached.
-    ```
-  - シェルソート
-    - 条件: スライスが12より短い場合
-    ```go
-    // Use ShellSort for slices <= 12 elements
-    ```
-  - クイックソート
-    - 条件: 上記条件に当てはまらない場合
+
+### 実際のソート処理の中身について
+sort.Sort(data sort.Interface) は渡されるデータによってソートの種別変えています。  
+流れとしては、基本的にクイックソートを利用して、条件を満たした際の他のソート手法に切り替わるといった挙動です。  
+
+- ヒープソート
+  - 条件: log(n+1)の整数値の2乗の深さとなった場合
+    - 右に1ビットずつシフト演算して0になるまでの回数の2乗が最大の深さ(`maxDepth`)
+    - `maxDepth`が0となったときに、ヒープソートに切り替わる
+  ```go
+  // package golang
+
+  // Switch to heapsort if depth of 2*ceil(lg(n+1)) is reached.
+  ```
+- シェルソート
+  - 条件: スライスが12より短い場合
+  ```go
+  // package golang
+
+  // Use ShellSort for slices <= 12 elements
+  ```
+- クイックソート
+  - 条件: 上記条件に当てはまらない場合
+
+
+## まとめ
+Golangのsortパッケージについて、学びました。  
+実際のソート処理の中身までは、深く追求しませんでしたが、  
+ソートを行う利用方法については触れられたかなと思います。
