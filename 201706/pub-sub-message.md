@@ -130,7 +130,58 @@ channel_segment  = token
 
 ### メタメッセージ定義
 #### handshake
-- クライアントは、`/meta/handshake`channelに対してメッセージを送ることで接続ネゴシエーションを開始する
+クライアントは、`/meta/handshake`channelに対してメッセージを送ることで接続ネゴシエーションを開始する
+
+handshake request (MUST field)
+|field| 説明|
+|:--|:--|
+|channel| `/meta/handshake` という値|
+|version| クライアントで処理されるバージョン|
+|supportedConnectionTypes| 接続タイプの文字列|
+
+handshake response
+|field| 説明|
+|:--|:--|
+|channel| `/meta/handshake` という値|
+|version| クライアントで処理されるバージョン|
+|supportedConnectionTypes| クライアント・サーバー共にサポートする接続タイプ|
+|clientId| クライアント固有のID|
+|successful| true/false|
+
+#### connect
+クライアントは、`/meta/connection` channelにメッセージを送ることでコネクションを開始する。
+
+connection request
+|field| 説明|
+|:--|:--|
+|channel| `/meta/handshake` という値|
+|clientId| クライアント固有のID|
+|connectionType| 接続タイプ|
+
+connection response
+|field| 説明|
+|:--|:--|
+|channel| `/meta/handshake` という値|
+|successful| true/false|
+|clientId| クライアント固有のID|
+
+#### subscribe
+チャネルへの登録を行うために、`/meta/subscribe`にリクエストを行い、配信登録を行う。  
+
+subscribe request
+|field| 説明|
+|:--|:--|
+|channel| `/meta/subscribe` という値|
+|clientId| クライアント固有のID|
+|subscription| 購読するチェネル名/チャネルパターン/配列|
+
+subscribe response
+|field| 説明|
+|:--|:--|
+|channel| `/meta/subscribe` という値|
+|successful| true/false|
+|clientId| クライアント固有のID|
+|subscription| 購読するチェネル名/チャネルパターン/配列|
 
 
 ## 参考
