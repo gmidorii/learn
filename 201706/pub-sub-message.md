@@ -183,6 +183,41 @@ subscribe response
 |clientId| クライアント固有のID|
 |subscription| 購読するチェネル名/チャネルパターン/配列|
 
+### イベントメッセージ定義
+#### イベントメッセージ投稿
+channelに対して、イベントを投稿する処理のこと
+
+publish request
+|field| 説明|
+|:--|:--|
+|channel| 投稿するchannel名|
+|data| JSONオブジェクトの形をしたメッセージ|
+
+publish response
+|field| 説明|
+|:--|:--|
+|channel| 投稿したchannel名|
+|successful| true/false|
+
+#### イベントメッセージ配信
+channelからクライアントへイベントを配信する
+
+|field| 説明|
+|:--|:--|
+|channel| 投稿するchannel名|
+|data| JSONオブジェクトの形をしたメッセージ|
+
+### ポーリング
+#### long-polling
+特徴
+- 配送すべきメッセージが届くまでコネクションをオープンにし続ける
+- 伝送遅延を最小化
+- フェールセーフとして、classicalな数秒ごとのポーリング処理を行う
+- POSTメッセージのボディで伝送される
+- 形式
+  - `application/x-www-form-urlencoded`
+  - `text/json`
+- 
 
 ## 参考
 [Pub/Subメッセージングモデル](http://itdoc.hitachi.co.jp/manuals/link/cosmi_v0870/APKC/EU070377.HTM)  
