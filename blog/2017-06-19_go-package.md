@@ -9,7 +9,43 @@ golangで開発するにあたって、パッケージ構成がよくわから�
 - ファイル内のコードの書き方
 
 ## パッケージ構成
-### アプローチ例
+### Good Practice
+下記の4点を考慮したアプローチ
+
+1. Root package is for domain types
+2. Group subpackages by dependency
+3. Use a shared mock subpackage
+4. Main package ties together dependencies
+
+#### #1. Root package is for domain types
+ドメインとは、データとプロセスがどのように相互作用を起こすかを記述する、高次元の言語のことです。  
+ドメインは、技術的なバックグラウンドに依存することはありません。  
+  
+Root packageには、このドメインタイプを配置します。Root package内は、  
+simpleな`struct`と`stuct`の振る舞いを定義した`interface`のみで構成されます。  
+  
+`The root package should not depend on any other package in your application!`  
+→ Root packageはアプリケーション上の他のいかなるパッケージにも依存すべきでない
+
+`ドメイン = User` の場合
+```go
+package app
+
+type User struct {
+  ID   int
+  Name string
+}
+
+type UserService interface {
+  User(id int) (*User, error)
+  UpdateUser(id int, name string) error
+}
+```
+
+#### #2. 
+
+
+### (補足) イマイチなアプローチ
 #### #1 モノリシックなパッケージ
 全てのコードをひとつのパッケージに詰め込む方式  
 → 小さなアプリケーションに対しては十分にうまくいきます。
@@ -36,8 +72,6 @@ golangで開発するにあたって、パッケージ構成がよくわから�
 1. 命名  
 `users.User` のように名前が重複してしまう
 2. 循環参照
-
-
 ## 参考
-[Standard Package Layout](https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1)
+[Standard Package Layout](https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1)  
 [【翻訳】【Golang】標準的なパッケージのレイアウト](http://allishackedoff.hatenablog.com/entry/2016/08/23/015016)
