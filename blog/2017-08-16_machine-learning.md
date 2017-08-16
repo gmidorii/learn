@@ -1,7 +1,7 @@
 # 機械学習初心者
 
 ## 概要
-Machine LearningをTensorFlowのTutorialsを通して触れてみました。  
+お盆休みを利用して、Machine LearningをTensorFlowのTutorialsを通して触れてみました。  
 解いた問題は、手書き数値の認識です。
 
 ## Machine Learning
@@ -9,10 +9,10 @@ Machine LearningをTensorFlowのTutorialsを通して触れてみました。
 
 ### 用語
 - データ
-  - (Training) データとそのラベルのセットを持つ必要がある
+  - (Training用) データとそのラベルのセットを持つ必要がある
     - ex) 手書き文字 <-> 書いてある文字
-  - (Test) accuracyを計測するためのデータ
-    - 同様にデータと正解を持つ必要がある
+  - (Test用) accuracyを計測するためのデータ
+    - 同様にデータと正解ラベルを持つ必要がある
 - weight
   - 入力値への重みテンソル(行列)
 - bias
@@ -21,11 +21,12 @@ Machine LearningをTensorFlowのTutorialsを通して触れてみました。
   - 入力値
 - y
   - 出力
-- 活性化関数
+- activation function
 ```
 evidence = W * x + b
 
 -------------------
+Tensor
 W = weight
 x = input
 b = bias
