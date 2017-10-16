@@ -124,18 +124,23 @@
     - 簡単に導入できるため
 
 ### Tips
-- go getでライブラリ導入
-  - `go get github.com/garyburd/redigo/redis`
-- ライブラリの依存関係
-  - [glidle](https://github.com/Masterminds/glide)
-    - /vendor配下にライブラリをdownload
-  - [dep](https://github.com/golang/dep)
-    - 準公式
-      - 後々 `go dep` のような形で公式に入る想定
-- フォーマットが公式で決められている
-  - `go fmt` で自動フォーマット (保存に自動で実施)
-- auto import可能
-  - `go import` でオートインポート + フォーマット (保存に自動実行)
+- ソース
+  - if err
+  - defer close
+  - struct json tab
+- ツール
+  - go getでライブラリ導入
+    - `go get github.com/garyburd/redigo/redis`
+  - ライブラリの依存関係
+    - [glidle](https://github.com/Masterminds/glide)
+      - /vendor配下にライブラリをdownload
+    - [dep](https://github.com/golang/dep)
+      - 準公式
+        - 後々 `go dep` のような形で公式に入る想定
+  - フォーマットが公式で決められている
+    - `go fmt` で自動フォーマット (保存に自動で実施)
+  - auto import可能
+    - `go import` でオートインポート + フォーマット (保存に自動実行)
 
 ### エディタ
 - vscode
@@ -181,3 +186,8 @@
 - http://tech.innova-jp.com/how-to-use-golang/
 - https://mayonez.jp/topic/1504
 - https://www.slideshare.net/yujiotani16/go-49082403
+- http://kmszk.hateblo.jp/entry/2016/12/16/返り値で型指定するDuck_Typing
+- http://jxck.hatenablog.com/entry/golang-slice-internals
+- https://www.slideshare.net/shibukawa/final-fantasy-record-keepergolang
+- https://developers.eure.jp/event/advent-calender_12/
+- https://moneyforward.com/engineers_blog/2017/07/31/mf-kessai-1/
