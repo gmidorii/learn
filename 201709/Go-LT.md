@@ -181,3 +181,6 @@
 - http://tech.innova-jp.com/how-to-use-golang/
 - https://mayonez.jp/topic/1504
 - https://www.slideshare.net/yujiotani16/go-49082403
+- https://qiita.com/Jxck_/items/02185f51162e92759ebe
+- https://github.com/mitchellh/gox
+- http://go-talks.appspot.com/github.com/lestrrat/go-slides/2014-yapcasia-go-for-perl-mongers/main.slide
