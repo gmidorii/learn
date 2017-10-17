@@ -7,7 +7,7 @@ import (
 
 func main() {
 	s := []int{}
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 5; i++ {
 		start := time.Now()
 		switch i {
 		case 0:
@@ -18,6 +18,8 @@ func main() {
 			s = sample2()
 		case 3:
 			s = sample3()
+		case 4:
+			s = sample4()
 		default:
 			break
 		}
@@ -49,6 +51,14 @@ func sample2() (s []int) {
 
 func sample3() (s []int) {
 	s = make([]int, 5, 5)
+	for i := 0; i < 5; i++ {
+		s[i] = i
+	}
+	return
+}
+
+func sample4() (s []int) {
+	s = make([]int, 5)
 	for i := 0; i < 5; i++ {
 		s[i] = i
 	}
