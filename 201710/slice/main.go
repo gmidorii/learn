@@ -28,39 +28,39 @@ func main() {
 	}
 }
 
-func sample() (s []int) {
-	s = []int{0, 1, 2, 3, 4}
-	return
+func sample() []int {
+	s := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	return s
 }
 
-func sample1() (s []int) {
-	s = make([]int, 0)
-	for i := 0; i < 5; i++ {
+func sample1() []int {
+	s := make([]int, 0)
+	for i := 0; i < 10; i++ {
 		s = append(s, i)
 	}
-	return
+	return s
 }
 
-func sample2() (s []int) {
-	s = make([]int, 0, 5)
-	for i := 0; i < 5; i++ {
+func sample2() []int {
+	s := make([]int, 0, 10)
+	for i := 0; i < 10; i++ {
 		s = append(s, i)
 	}
-	return
+	return s
 }
 
-func sample3() (s []int) {
-	s = make([]int, 5, 5)
-	for i := 0; i < 5; i++ {
+func sample3() []int {
+	s := make([]int, 10, 10)
+	for i := 0; i < 10; i++ {
 		s[i] = i
 	}
-	return
+	return s
 }
 
-func sample4() (s []int) {
-	s = make([]int, 5)
-	for i := 0; i < 5; i++ {
+func sample4() []int {
+	s := make([]int, 10)
+	for i := 0; i < 10; i++ {
 		s[i] = i
 	}
-	return
+	return s
 }
