@@ -10,6 +10,7 @@
 - 固定長配列
   - lenを変える事はできない
 - 型に配列長も含まれる
+	- ex) `[3]int`
 
 ### Slice
 - 可変長配列
@@ -24,80 +25,80 @@
 ## サンプル実装と測定
 ### Slice生成
 #### 測定
-宣言時に追加 `461.6 ns`
+宣言時に追加
 ```go
-  s := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-```
-```
-0:   335 ns [0 1 2 3 4 5 6 7 8 9]
-0:   479 ns [0 1 2 3 4 5 6 7 8 9]
-0:   571 ns [0 1 2 3 4 5 6 7 8 9]
-```
-
-len=0で初期化 `9532 ns`
-```go
-	s := make([]int, 0)
-	for i := 0; i < 10; i++ {
-    // s[i] = i だとindexOutOfBounds
-		s = append(s, i)
+func BenchmarkInitDeclation(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+		b.StopTimer()
+		fmt.Sprint(s)
+		b.StartTimer()
 	}
-```
-```
-1:  6750 ns [0 1 2 3 4 5 6 7 8 9]
-1: 11202 ns [0 1 2 3 4 5 6 7 8 9]
-1: 10644 ns [0 1 2 3 4 5 6 7 8 9]
+}
 ```
 
-len=10で初期化 `369.3 ns`
+len=0で初期化
 ```go
-	s := make([]int, 10)
-	for i := 0; i < 5; i++ {
-		s[i] = i
+func BenchmarkInitMakeLen0(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := make([]int, 0)
+		for i := 0; i < 10; i++ {
+			s = append(s, i)
+		}
 	}
-```
-```
-4:   343 ns [0 1 2 3 4 5 6 7 8 9]
-4:   402 ns [0 1 2 3 4 5 6 7 8 9]
-4:   363 ns [0 1 2 3 4 5 6 7 8 9]
+}
 ```
 
-len=0,cap=10で初期化 `412 ns`
+len=10で初期化
 ```go
-	s := make([]int, 0, 10)
-	for i := 0; i < 10; i++ {
-		s = append(s, i)
+func BenchmarkInitMakeLen10(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := make([]int, 10)
+		for i := 0; i < 10; i++ {
+			s[i] = i
+		}
 	}
-```
-```
-2:   452 ns [0 1 2 3 4 5 6 7 8 9]
-2:   406 ns [0 1 2 3 4 5 6 7 8 9]
-2:   378 ns [0 1 2 3 4 5 6 7 8 9]
+}
 ```
 
-len=10,cap=10で初期化 `416 ns`
+len=0,cap=10で初期化
 ```go
-	s := make([]int, 10, 10)
-	for i := 0; i < 5; i++ {
-		s[i] = i
+func BenchmarkInitMakeLen0Cap10(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := make([]int, 0, 10)
+		for i := 0; i < 10; i++ {
+			s = append(s, i)
+		}
 	}
-	return
-```
-```
-3:   432 ns [0 1 2 3 4 5 6 7 8 9]
-3:   375 ns [0 1 2 3 4 5 6 7 8 9]
-3:   441 ns [0 1 2 3 4 5 6 7 8 9]
+}
 ```
 
-#### 結果 (asc)
-- len=10で初期化        `369.3 ns`
-- len=0,cap=10で初期化  `412 ns`
-- len=10,cap=10で初期化 `416 ns`
-- 宣言時に追加           `461.6 ns`
-- len=0で初期化         `9532 ns`
+len=10,cap=10で初期化
+```go
+func BenchmarkInitMakeLen10Cap10(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := make([]int, 10, 10)
+		for i := 0; i < 10; i++ {
+			s[i] = i
+		}
+	}
+}
+```
+
+### 結果
+```sh
+% go test -bench . -benchmem
+BenchmarkInitDeclation-4                 3000000               433 ns/op              80 B/op          1 allocs/op
+BenchmarkInitMakeLen0-4                 10000000               284 ns/op             248 B/op          5 allocs/op
+BenchmarkInitMakeLen10-4                200000000                7.43 ns/op            0 B/op          0 allocs/op
+BenchmarkInitMakeLen0Cap10-4            100000000               15.4 ns/op             0 B/op          0 allocs/op
+BenchmarkInitMakeLen10Cap10-4           200000000                7.19 ns/op            0 B/op          0 allocs/op
+PASS
+ok      github.com/midorigreen/learn/201710/slice       118.526s
+```
 
 #### 考察
 
-
-
 ## 参考
 - [Go のスライスの内部実装](http://jxck.hatenablog.com/entry/golang-slice-internals)
+- [golang でパフォーマンスチューニングする際に気を付けるべきこと](https://mattn.kaoriya.net/software/lang/go/20161019124907.htm)
