@@ -1,8 +1,12 @@
 # AWS Lambda + Typescript
 
 ## 記事
-https://qiita.com/goto63/items/1374ae0c1f1696266177
-https://qiita.com/ryusaka/items/8778e3b2afcffc8e7ca6
+- https://qiita.com/goto63/items/1374ae0c1f1696266177
+- https://qiita.com/ryusaka/items/8778e3b2afcffc8e7ca6
+- https://qiita.com/horike37/items/b295a91908fcfd4033a2
+- [serverless](https://serverless.com/framework/docs/providers/aws/guide/intro/)
+- [TypeScript Doc](https://github.com/Microsoft/TypeScript/tree/master/doc)
+- [DynamoDB Sample](https://github.com/serverless/examples/blob/master/aws-node-typescript-rest-api-with-dynamodb/todos/create.ts)
 
 ## 対応メモ
 - Typescript compile
@@ -25,4 +29,14 @@ https://qiita.com/ryusaka/items/8778e3b2afcffc8e7ca6
 - -p: input JSON
 ```
 % sls invoke local -f hello -p event.json
+```
+
+### Deploy
+- aws configureの設定が必要
+- serverless.ymlを修正しないと `us-east-1` へdeployされる
+```yml
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-northeast-1
 ```
