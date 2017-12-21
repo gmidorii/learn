@@ -1,6 +1,46 @@
 # みんなのGo言語
 
 ## テスト
+- 明示/シンプル
+  - 低レベルなやり方
+- 普通のGoのコードを書くことでテストできる
+- 利用するもの
+  - testing package
+  - go test
+
+### 基本ルール
+- `_test.go` とファイル名をする
+- `Test`で関数名を始める
+- 引数には `*testing.T` を渡す
+- 絞込
+  - `go test -run TestXXX`
+  - `go test -run "XXX$"`
+
+### Example
+- `Example`で関数名を始める
+- 出力 `// Output:`
+```go
+func ExapmleHello() {
+  fmt.Println("Hi")
+  // Output: Hi
+}
+```
+- Unordered output
+```go
+func ExampleMap() {
+  m := map[string]int{"x":1, "y":2, "z":3}
+  fmt.Print("k=%s v=%d\n", k, v)
+  // Unordered output:
+  // k=x v=1
+  // k=y v=2
+  // k=z v=3
+}
+```
+- Exampleはgodocに載せられる
+  - `func ExampleHoge()` Hoge型
+  - `func ExampleHoge_Print()` Hoge型のPrintメソッド
+  - `func Example()` パッケージ全体
+
 ### Table Driven Test
 - 特になし
 
