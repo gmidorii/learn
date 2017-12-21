@@ -41,6 +41,13 @@ func ExampleMap() {
   - `func ExampleHoge_Print()` Hoge型のPrintメソッド
   - `func Example()` パッケージ全体
 
+### Benchmark
+- `Benchmark` で関数名を始める
+- `*testing.B` を引数に渡す
+- `go test -bench` で実行
+- サブベンチマーク
+  - Table Drivenにベンチマークを取ることが可能
+
 ### Table Driven Test
 - 特になし
 
