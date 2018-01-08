@@ -8,6 +8,7 @@
 - [TypeScript Doc](https://github.com/Microsoft/TypeScript/tree/master/doc)
 - [DynamoDB Sample](https://github.com/serverless/examples/blob/master/aws-node-typescript-rest-api-with-dynamodb/todos/create.ts)
 - [AWS LambdaをTypeScriptで開発する](http://dream-of-electric-cat.hatenablog.com/entry/2016/11/06/231255)
+- [LocalStack](https://dev.classmethod.jp/cloud/aws/localstack-lambda/)
 
 ## 対応メモ
 - Typescript compile
