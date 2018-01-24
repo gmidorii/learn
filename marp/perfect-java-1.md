@@ -110,6 +110,7 @@
 - `jstat`
   - メモリ状況モニター
   - `jstat -gc -h5 $PID 1s`
+  - `jstat -gcutil -h5 $PID 1s`
 
 ---
 
