@@ -96,3 +96,5 @@
 - Statefulなマネージャーにより実行される
 
 #### Continuous Integration Pipeline
+- CI Pipelineのこと
+- 都度実行で良いためサーバーレスのユースケースに合っている
