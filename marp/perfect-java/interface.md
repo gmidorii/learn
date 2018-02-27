@@ -1,3 +1,5 @@
+<!-- $theme: default -->
+
 <!-- page_number: true -->
 <!-- $size: 4:3 -->
 
@@ -116,3 +118,45 @@ void method(CharSequence s) {
 - 変数の型が、オブジェクトのクラス型と一致
 - 変数の型が、オブジェクトのクラスの拡張元クラスと一致
 - 変数の型が、オブジェクトのクラスが実装するインターフェースと一致
+
+----
+
+# 多態性 (Polymorphism)
+```java
+class FugaString implements CharSequence{
+  public int indexOf(String str) {}
+}
+
+class Hoge {
+  public void print(CharSequence c) {
+    // エラー
+    c.indexOf();
+  }
+}
+
+// エラー
+new Hoge().print(new FugaString());
+```
+→ 呼び出すメソッドは型に依存
+→ ダウンキャストでやる方法は危険なのでNG
+
+----
+
+# 多態性 (Polymorphism)
+メソッドの引数
+### CharSequenceで渡す
+- CharSequenceを実装した任意のクラスのインスタンスを参照できる
+→ これこそ多態性
+
+![](./img/polymorphism.png)
+
+----
+
+# 多態性 (Polymorphism)
+
+### クラスの拡張継承
+- 多態性
+- 実装コードの共有
+
+### インターフェース
+- 多態性
