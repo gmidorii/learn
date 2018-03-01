@@ -9,7 +9,10 @@ import (
 )
 
 func main() {
-	fmt.Println("vim-go")
+	Second()
+}
+
+func Second() {
 	fmt.Fprintf(os.Stdout, "Now: %v\n", time.Now())
 
 	encoder := json.NewEncoder(os.Stdout)
