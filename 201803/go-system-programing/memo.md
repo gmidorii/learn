@@ -34,3 +34,7 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
   - ビッグエンディアン
     - 大きい桁から格納
     - ネットワーク
+- テキスト読み込み
+  - bufio.Reader('\n') は区切り文字も含む
+  - bufio.Scanner() は区切り文字は含まない
+
