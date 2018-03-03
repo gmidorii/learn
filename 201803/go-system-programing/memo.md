@@ -1,6 +1,6 @@
 # Goならわかるシステムプログラミング
 
-## 第2章 低レベルアクセスへの入り口
+## 第2章 低レベルアクセスへの入り口 Writer
 - POSIX系OSではすべてのものをファイルとして抽象化
   - ファイルディスクリプタが割り当てられる
   - ファイルディスクリプタは数値
@@ -16,3 +16,21 @@
   - 標準入出力時に変換処理 or 追加処理をかましたい場合に利用できそう
 - `godoc -http ':6060' -analysis type`
   - godoc起動 + implementsチェック
+
+## 第3章 低レベルアクセスへの入り口 Reader
+```go
+// io.Closerインターフェースを満たしていないio.Readerを
+// io.ReadCloserインターフェースへキャストできる
+// Close()時は何もしない
+var reader io.Reader = strings.NewReader("テスト")
+var readCloser io.ReadCloser = ioutil.NopCloser(reader)
+```
+
+- エンディアン
+  - バイトの格納順
+  - リトルエンディアン
+    - 小さい桁から格納
+    - CPU
+  - ビッグエンディアン
+    - 大きい桁から格納
+    - ネットワーク
