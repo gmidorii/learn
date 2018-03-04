@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"crypto/rand"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -11,7 +12,11 @@ import (
 
 func main() {
 	endian()
+	// Q3.1
 	copyFile()
+
+	// Q3.2
+	randRead()
 }
 
 func endian() {
@@ -41,4 +46,13 @@ func copyFile() {
 	}
 
 	fmt.Printf("written count: %v \n", written)
+}
+
+func randRead() {
+	reader := io.LimitReader(rand.Reader, 1024)
+	buf := &bytes.Buffer{}
+	io.Copy(buf, reader)
+
+	// 1024 byte
+	fmt.Println(buf.Len())
 }
