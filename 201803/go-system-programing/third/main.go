@@ -17,6 +17,9 @@ func main() {
 
 	// Q3.2
 	randRead()
+
+	// Q3.3
+	zip()
 }
 
 func endian() {
@@ -55,4 +58,17 @@ func randRead() {
 
 	// 1024 byte
 	fmt.Println(buf.Len())
+}
+
+func zip() {
+	arch, err := os.Create("archive.zip")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer arch.Close()
+
+	zipWriter := zip.NewWriter(arch)
+	defer zipWriter.Close()
+
+	// 一時ファイルができないようにする..?
 }
