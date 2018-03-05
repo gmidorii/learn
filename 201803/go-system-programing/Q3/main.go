@@ -1,6 +1,7 @@
 package main
 
 import (
+	"archive/zip"
 	"bytes"
 	"crypto/rand"
 	"encoding/binary"
@@ -8,6 +9,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -19,7 +21,7 @@ func main() {
 	randRead()
 
 	// Q3.3
-	zip()
+	zipW()
 }
 
 func endian() {
@@ -60,7 +62,7 @@ func randRead() {
 	fmt.Println(buf.Len())
 }
 
-func zip() {
+func zipW() {
 	arch, err := os.Create("archive.zip")
 	if err != nil {
 		log.Fatalln(err)
@@ -70,5 +72,11 @@ func zip() {
 	zipWriter := zip.NewWriter(arch)
 	defer zipWriter.Close()
 
-	// 一時ファイルができないようにする..?
+	w, err := zipWriter.Create("tmp.txt")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	r := strings.NewReader("Goならわかるシステムプログラミング")
+
+	io.Copy(w, r)
 }
