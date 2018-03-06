@@ -37,4 +37,7 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
 - テキスト読み込み
   - bufio.Reader('\n') は区切り文字も含む
   - bufio.Scanner() は区切り文字は含まない
-
+- zip.NewWriter(io.Writer)でwriterを作成
+  - zipWriterはio.Writer IFを実装していない
+  - `w, e := writer.Create("tmp.txt")` でarchiveするファイル作成
+  - io.Copyでarchive writerへreaderから引き渡す
