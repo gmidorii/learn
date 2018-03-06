@@ -195,11 +195,170 @@ new Hoge().print(new FugaString());
 ----
 
 # インターフェースと抽象クラス
+- 「振る舞い」インターフェース
+- 「実装」クラス
+
 ## 現実的な使い分けの指針
-変数の引数について
-### インターフェイス
+### 変数の型
+#### インターフェイス
 - 境界を意識するコード
 - APIとして公開するコード
 
-### クラス
+#### クラス
 - それ以外
+
+----
+
+# インターフェース宣言
+
+```java
+[修飾子] interface インターフェース名 {
+  メンバ宣言
+}
+```
+
+----
+
+# インターフェースのメンバ
+
+メンバに宣言できるものは？(全部で6つ)
+
+----
+
+# インターフェースのメンバ
+- 抽象メソッド
+- defaultメソッド
+- staticメソッド
+- 定数フィールド
+- staticなネストクラス
+- staticなネストしたインターフェース
+
+----
+
+# インターフェースのメンバ (メソッド)
+```java
+public GoWriteable interface {
+
+  // public
+  String fmtPrint();
+
+  // default
+  default errorHandle() {
+    System.out.println("if (err != nil) {return err}");
+  }
+
+  // static
+  static format() {
+    System.out.println("go fmt");
+  }
+}
+```
+
+----
+
+# default/staticメソッドの指針
+
+## defaultと抽象クラスの具象メソッド
+- まずはインターフェースと抽象クラスのどちらを利用するかを考える
+- インターフェースが持つべき振る舞いで典型的な実装があれば「default」
+
+## staticメソッド
+- あいまい
+- 何もなければインターフェースに「振る舞いの既定」以外の役割は持たせたくない
+→ 利用しない
+
+----
+
+# インターフェースのメンバ (フィールド)
+```java
+public GoWriteable interface {
+  // public static final
+  String CONCURRENT_WORD = "Do not communicate by sharing memory; instead, share memory by communicating."
+}
+```
+
+- static初期化ブロックNG = 宣言時に代入
+
+ただ、これももう使わない
+
+----
+
+# 実装
+```java
+[修飾子] class Hoge implements インターフェース名, インターフェース名 {
+
+}
+
+// ちなみに
+[修飾子] class Hoge extends 親クラス implements インターフェース名, インターフェース名 {
+
+}
+```
+
+継承したメソッドの修飾子はpublic only
+
+---- 
+
+# defaultメソッドの明示的な呼び出し
+```java
+public class Hoge implements GoWriteable {
+
+  @Override
+  public void errorHandle() {
+    // インターフェースのdefault実装を呼び出す
+    GoWriteable.super.print();
+  }
+}
+
+```
+
+----
+
+# インターフェースの拡張継承
+- クラスの拡張継承は実装の共有
+- インターフェースの拡張継承は振る舞い(宣言)の共有
+- 多重継承可 (クラスはNG)
+
+```java
+public GoWriteable interface extends TypeScriptWriteable {
+}
+```
+
+----
+
+# 多重継承
+- (再掲) クラスは不可/インターフェースは可
+
+## 大丈夫..?
+- 同じシグネチャを持つメソッド
+  - 1つだけ実装すればOK
+- 同じメソッド名で引数が異なる
+  - ただのオーバーロード
+- 返り値の型だけ異なる場合
+  - シグネチャに返り値型は含まれないためコンパイルエラー
+  - 返り値の型同士で継承関係があればOK
+
+----
+
+# 多重継承
+## 返り値の型だけ異なる場合
+```java
+public GoWriteable interface {
+  String fmtPrint();
+}
+pubclic TypeScriptWriteable interface {
+  Object fmtPrint();
+}
+
+public class Hoge implements GoWriteable, TypeScriptWriteable {
+  // Object > String
+  @Override
+  public String fmtPrint() {
+    return "fmt.Println()"
+  }
+}
+```
+
+----
+
+# インターフェースの設計
