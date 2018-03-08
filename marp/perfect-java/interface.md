@@ -362,3 +362,121 @@ public class Hoge implements GoWriteable, TypeScriptWriteable {
 ----
 
 # インターフェースの設計
+- コードをインターフェイスに依存させるように意識
+- Javaインターフェイスは複数の実装の切り替えに使う(多態性)
+  - Collectionの影響で..
+  - だがそれだけでない
+
+----
+
+# コールバックパターン (before)
+```java
+public class Hoge {
+  private String replace(String input, String oldStr, String newStr) {
+    return input.replaceAll(oldStr, newStr);
+  }
+  private String capitalize(String input) {
+    return input.toUpperCase();
+  }
+
+  public String convert(String input) {
+    return capitalize(replace(input, "old", "new"));
+  }
+}
+
+Hoge hoge = new Hoge();
+hoge.convert("hoge old.");
+```
+
+→ 変換処理が増えるたび実装とconvert()を書き換える必要がある
+
+----
+
+# コールバックパターン (after)
+```java
+public interface Filter {
+  String doJob(String input);
+}
+
+public class ReplaceFilter {
+  @Override
+  public String doJob() {
+  	return input.toUpperCase();
+  }
+}
+
+public class CapitalizeFilter {
+  @Override
+  public String doJob() {
+  	return input.toUpperCase();
+  }
+}
+```
+
+----
+
+# コールバックパターン (after)
+(続き)
+```java
+public class Hoge {
+    private List<Filter> filters;
+    
+    public Hoge(List<Filter> filters) {
+    	this.filters = filters;
+    }
+    
+    public String convert(String input) {
+    	String output;
+    	filters.forEach(f -> output = f.doJob())
+        return output;
+    }
+}
+```
+
+→ 変わりやすい処理(変換部分)をクラス外に追いやりました (Hogeの安定化)
+→ 複雑性は変わってないです
+
+----
+
+# イベントドリブンコード
+- コールバックパターンの一種
+- メソッド呼び出しと依存の向き先を逆にした実装
+- A->Bを呼ぶのではなく、BをAに登録する
+
+![](./img/event.png)
+
+----
+
+# ストラテジパターン(before)
+
+```java
+public class Hoge {
+  private String type;
+    
+  pulblic String convert(String input) { 
+    if (Object.equals(type, "TYPE1") {
+       return replace(input)
+    }
+    if (Object.equals(type, "TYPE2") {
+       return capitalize(input)
+    }
+    return input;
+  }
+}
+```
+
+----
+
+# ストラテジパターン(after)
+```java
+public class Hoge {
+  private Filter filter
+    
+  pulblic String convert(String input) {
+    return filter.doJob(input);
+  }
+}
+```
+
+→ 条件分岐をクラス外へ追い出した
+→ 不安定な条件分岐が多くある場合は、このパターンを使ってHogeの安定化を図る
