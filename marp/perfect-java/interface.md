@@ -6,17 +6,11 @@
 # Perfect Java 7章 Interface
 
 ----
-# この章の見方/観点
-- オブジェクトがどんな振る舞いをするか
-- どんな機能を提供するか
-- 異なるクラスが同一のインターフェースを提供する意味
-
-----
 
 # 境界と抽象化
 
 - 規模が大きくなると "機能" と "役割" で分割する
-- 全体を組み立てるときに詳細を意識しないようにする
+- 全体を組み立てるときに詳細を意識しないようにすると楽
 	- 詳細まで見きれない
     - *部品として抽象化することが大事*
 
@@ -41,8 +35,11 @@
 
 ## 違い
 - Interfaceは雛形ではない
-
 - 型定義に特化した言語機能
+
+----
+
+# Interface
 
 ```java
 interface HogeInterface {
@@ -58,7 +55,7 @@ public class Hoge implements HogeInterface {
 ----
 
 # Interface型の変数
-```
+```java
 HogeInterface h = new Hoge();
 ```
 
@@ -69,7 +66,7 @@ HogeInterface h = new Hoge();
 
 # メソッドの引数
 ```java
-class FugaString implements CharSequence{
+class FugaString implements CharSequence {
 }
 
 void method(FugaString s) {
@@ -78,6 +75,9 @@ void method(FugaString s) {
 ```
 ↓ あ、Stringクラス渡したくなったからFugaStringを拡張継承
 ```java
+class FugaString extends String implements CharSequence {
+}
+
 void method(String s) {
   System.out.println("length" + s.length());
 }
@@ -104,15 +104,18 @@ void method(CharSequence s) {
 - ただ、よく見るとlength()メソッドにしか依存してない!!
 
 #### 要するに
-引数の方をInterfaceにすることで、
+引数の型をInterfaceにすることで、
 *「特定の振る舞いをするメソッドをもつオブジェクトを受けるよ！」*
 と表明できる
+→ 今回だとCharSequence.length()
 
 ----
 
+?
 # メソッドの引数
 3つがlength()メソッドを持ってればよくない?
 → Javaの思想的にNG
+↓
 
 ## 特別な関係
 - 変数の型が、オブジェクトのクラス型と一致
@@ -143,6 +146,7 @@ new Hoge().print(new FugaString());
 ----
 
 # 多態性 (Polymorphism)
+
 メソッドの引数
 ### CharSequenceで渡す
 - CharSequenceを実装した任意のクラスのインスタンスを参照できる
@@ -166,9 +170,9 @@ new Hoge().print(new FugaString());
 # 依存性
 
 実装(クラス)と振る舞い(インターフェース)では経験的に実装が変化しやすい
-→ 逆に、変化しづらい振る舞いをインターフェースとして切り出す
+→ 逆に、変化しづらい振る舞いをインターフェースとして切り出すのが良い
 
-### クラスとインターフェースの適切な使い分け
+## クラスとインターフェースの適切な使い分け
 - 変化しづらい振る舞いをインターフェースにまとめる
 - クラスはインターフェースを継承することで変化しづらい部分を表明する
 - クラスはインターフェースに依存したコードにより、変化しづらい部分のみへの依存を保証する
@@ -181,8 +185,8 @@ new Hoge().print(new FugaString());
 
 ## 違う
 - 抽象クラスは雛形としての役割も担う
-- インターフェイス: 振る舞いの規定
-- 抽象クラス: 実装の拡張の役割
+	- インターフェイス: 振る舞いの規定
+	- 抽象クラス: 実装の拡張の役割
 
 ----
 
@@ -199,6 +203,7 @@ new Hoge().print(new FugaString());
 - 「実装」クラス
 
 ## 現実的な使い分けの指針
+
 ### 変数の型
 #### インターフェイス
 - 境界を意識するコード
