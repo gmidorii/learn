@@ -243,18 +243,18 @@ new Hoge().print(new FugaString());
 
 # インターフェースのメンバ (メソッド)
 ```java
-public GoWriteable interface {
+interface GoWriteable {
 
   // public
   String fmtPrint();
 
   // default
-  default errorHandle() {
+  default void errorHandle() {
     System.out.println("if (err != nil) {return err}");
   }
 
   // static
-  static format() {
+  static void format() {
     System.out.println("go fmt");
   }
 }
@@ -277,7 +277,7 @@ public GoWriteable interface {
 
 # インターフェースのメンバ (フィールド)
 ```java
-public GoWriteable interface {
+interface GoWriteable {
   // public static final
   String CONCURRENT_WORD = "Do not communicate by sharing memory; instead, share memory by communicating."
 }
@@ -326,7 +326,7 @@ public class Hoge implements GoWriteable {
 - 多重継承可 (クラスはNG)
 
 ```java
-public GoWriteable interface extends TypeScriptWriteable {
+interface GoWriteable extends TypeScriptWriteable {
 }
 ```
 
@@ -349,10 +349,10 @@ public GoWriteable interface extends TypeScriptWriteable {
 # 多重継承
 ## 返り値の型だけ異なる場合
 ```java
-public GoWriteable interface {
+interface GoWriteable {
   String fmtPrint();
 }
-pubclic TypeScriptWriteable interface {
+interface TypeScriptWriteable {
   Object fmtPrint();
 }
 
@@ -400,7 +400,7 @@ hoge.convert("hoge old.");
 
 # コールバックパターン (after)
 ```java
-public interface Filter {
+interface Filter {
   String doJob(String input);
 }
 
