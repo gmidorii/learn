@@ -41,3 +41,15 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
   - zipWriterはio.Writer IFを実装していない
   - `w, e := writer.Create("tmp.txt")` でarchiveするファイル作成
   - io.Copyでarchive writerへreaderから引き渡す
+
+## 第4章 チャネル
+- queue + 並列機構 = channel
+- 性質
+  - ① データを順序よく受け渡すデータ構造
+    - ランダムアクセス不可
+  - ② 並列処理の場合でも正しく動作する
+    - 整合性が壊れない
+    - 同時に投入の場合も、1つのgoroutineからしか順に投入となる
+  - ③ 読み書きの準備ができるまでブロックする
+    - データが無い場合、データが投入されるまでブロック
+    - バッファに空きがない場合、空きが出るまでブロック
