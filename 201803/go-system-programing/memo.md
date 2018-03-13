@@ -53,3 +53,8 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
   - ③ 読み書きの準備ができるまでブロックする
     - データが無い場合、データが投入されるまでブロック
     - バッファに空きがない場合、空きが出るまでブロック
+- channelは1, 2 returnできる
+  - channel内を通ったデータ + close判定
+- 終了通知はcloseを利用するのでなく別channelを開く
+  - 各channelはcloseしない (closeせずともGCされる)
+  - 終了通知用のchannelはcloseする
