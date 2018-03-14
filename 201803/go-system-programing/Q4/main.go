@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"time"
+)
 
 func main() {
 	chanLoop()
+	contexts()
 }
 
 func chanLoop() {
@@ -20,4 +25,15 @@ func chanLoop() {
 	for i := range c {
 		fmt.Println(i)
 	}
+}
+
+func contexts() {
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	go func() {
+		defer cancel()
+		time.Sleep(5 * time.Second)
+	}()
+
+	<-ctx.Done()
+	fmt.Printf("done: %v", ctx.Err())
 }
