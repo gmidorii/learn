@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
-	chanLoop()
-	contexts()
+	ChanLoop()
+	Contexts()
 }
 
-func chanLoop() {
+// ChanLoop is sample code combined by goroutine, channel and for-loop.
+func ChanLoop() {
 	c := make(chan int)
 	go func(c chan int) {
 		defer close(c)
@@ -27,7 +28,8 @@ func chanLoop() {
 	}
 }
 
-func contexts() {
+// Contexts is sample code implemented context timeout.
+func Contexts() {
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	go func() {
 		defer cancel()
