@@ -58,7 +58,7 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
 - 終了通知はcloseを利用するのでなく別channelを開く
   - 各channelはcloseしない (closeせずともGCされる)
   - 終了通知用のchannelはcloseする
-- OSにて時間がかかる処理
+- OS時間がかかる処理
   - 準備が終わるまでプロセスを止め、終わり次第プロセスに処理を戻す(ブロッキング)
   - 終わってなくても即座に処理を返し、返却は一部と続きがあることを通知(ノンブロッキング)
   - プロセスを一時停止しコールバック関数を呼ぶ(シグナル)
