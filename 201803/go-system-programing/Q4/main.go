@@ -3,12 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
 func main() {
 	ChanLoop()
 	Contexts()
+	Signals()
 }
 
 // ChanLoop is sample code combined by goroutine, channel and for-loop.
@@ -37,5 +41,15 @@ func Contexts() {
 	}()
 
 	<-ctx.Done()
-	fmt.Printf("done: %v", ctx.Err())
+	fmt.Printf("done: %v\n", ctx.Err())
+}
+
+// Signals is sample code signal notify to channel.
+func Signals() {
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT)
+
+	fmt.Println("Waiting ...")
+	<-sig
+	fmt.Println("SIGINT arrive")
 }
