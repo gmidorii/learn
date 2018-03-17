@@ -12,7 +12,7 @@ import (
 func main() {
 	ChanLoop()
 	Contexts()
-	Signals()
+	//Signals()
 }
 
 // ChanLoop is sample code combined by goroutine, channel and for-loop.
