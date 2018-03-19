@@ -85,3 +85,17 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
   - Portable Operating System Interface
   - OS間の共通のシステムコールのインターフェイス規格
   - Cの関数名と引数、返り値が定義されている
+  - 「OS間のポータビリティを維持する」
+- システムコール監視
+```sh
+# linux
+% strace ./main
+% strace -p ${PID}
+
+# macos
+# 1. SIPを停止する必要がある
+# 2. "C" をimportする必要がある
+% sudo dtruss ./main
+% sudo dtruss -p ${PID}
+```
+
