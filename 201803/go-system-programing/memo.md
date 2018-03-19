@@ -99,3 +99,13 @@ var readCloser io.ReadCloser = ioutil.NopCloser(reader)
 % sudo dtruss -p ${PID}
 ```
 
+## 第6章 TCPソケットとHTTPの実装
+- プログラマが気にするのはアプリケーション層
+  - HTTP
+- ソケット
+  - TCP
+  - UDP
+  - Unix ドメインソケット
+- ソケット通信
+  - サーバー
+  - クライアント
