@@ -404,14 +404,14 @@ interface Filter {
   String doJob(String input);
 }
 
-public class ReplaceFilter {
+public class ReplaceFilter implements Filter {
   @Override
   public String doJob() {
   	return input.toUpperCase();
   }
 }
 
-public class CapitalizeFilter {
+public class CapitalizeFilter implements Filter {
   @Override
   public String doJob() {
   	return input.toUpperCase();
