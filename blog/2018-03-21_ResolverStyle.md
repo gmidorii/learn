@@ -1,12 +1,12 @@
 # [Java] ResolverStyle.LENIENTを利用して時間をいい感じに扱う
 
 ## 概要
-Java SE8より利用可能な、 `java.time.format.ResolverStyle` を使って、  
+Java8より利用可能な、 `java.time.format.ResolverStyle` を使って、  
 扱いづらい時間をいい感じに利用できます。  
 `25:16` ってどうやって扱えばよいのかわからないといった方に便利です。  
 
 ## java.time.format.ResolverStyleとは？
-Java SE8から、 `java.time.format.DateTimeFormatter` を利用して時間をパースします。  
+Java8から、 `java.time.format.DateTimeFormatter` を利用して時間をパースします。  
 このパースする際の、スタイルがEnumとして `ResolverStyle` に定義してあります。  
 `DateTimeFormatter` へ渡すことで、スタイルを切り替えることができます。  
 
@@ -30,7 +30,7 @@ Java SE8から、 `java.time.format.DateTimeFormatter` を利用して時間を�
 ## 実装
 ### 実装クラス
 `DateTimeFormatter#withResolverStyle()` にてスタイルを指定する  
-[コード](https://github.com/midorigreen/resolver-style/blob/master/src/main/java/SampleResolver.java#L12)  
+[コード](https://github.com/midorigreen/resolver-style/blob/master/src/main/java/SampleResolver.java#L12)  
 
 (一部抜粋)
 ```java
